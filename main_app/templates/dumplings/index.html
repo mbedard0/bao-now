@@ -18,21 +18,22 @@
 <section class="card-container">
   {% for dumpling in dumplings %}
     <div class="card">
-      <div class="card-content">
-        <div class="card-img-container">
-          <img 
-            src="{% static 'images/sk8r-boi-dumpling.svg' %}" 
-            alt="A skater boy dumpling"
-          >
+      <a href="{% url 'dumplings_detail' dumpling.id %}">
+        <div class="card-content">
+          <div class="card-img-container">
+            {% comment %} <img 
+              src="{% static 'images/sk8r-boi-dumpling.svg' %}" 
+              alt="A skater boy dumpling"
+            > {% endcomment %}
+          </div>
+          <h2 class="card-title">{{ dumpling.name }}</h2>
+          {% comment %} {% if dumpling.age > 0 %}
+            <p>A {{ dumpling.age }} year old {{ dumpling.breed }}</p>
+          {% else %} {% endcomment %}
+            <p>A {{ dumpling.cook_type }} dumpling from {{ dumpling.country }}.</p>
+          <p><small>Filled with {{ dumpling.filling }}</small></p>
         </div>
-        <h2 class="card-title">{{ dumpling.name }}</h2>
-        {% if dumpling.age > 0 %}
-          <p>A {{ dumpling.age }} year old {{ dumpling.breed }}</p>
-        {% else %}
-          <p>A {{ dumpling.breed }} kitten.</p>
-        {% endif %}
-        <p><small>{{ dumpling.description }}</small></p>
-      </div>
+      </a>
     </div>
   {% endfor %}
 </section>

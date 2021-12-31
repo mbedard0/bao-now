@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+{% endblock %}
 
 {% block content %}
 
-<h1>Home</h1>
-<hr />
-<p>
-</p>
+<section class="logo-container">
+  <div class="dumpling-container">
+    {% comment %} <img src="{% static 'images/splash.svg' %}" alt="The Cat Collector Cat" /> {% endcomment %}
+  </div>
+  <img 
+    src="{% static 'images/gyoza.svg' %}" 
+    alt="Text reads: BaoNow"
+  />
+</section>
 
 {% endblock %}
