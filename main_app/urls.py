@@ -7,4 +7,6 @@ urlpatterns = [
   path('dumplings/', views.index, name='dumplings_index'),
   path('dumplings/<int:dumpling_id>/', views.detail, name='dumplings_detail'),
   path('dumplings/create/', views.DumplingCreate.as_view(), name='dumplings_create'),
+  path('dumplings/<int:pk>/update/', views.DumplingUpdate.as_view(), name='dumplings_update'),
+  path('dumplings/<int:pk>/delete/', views.DumplingDelete.as_view(), name='dumplings_delete'),
 ]

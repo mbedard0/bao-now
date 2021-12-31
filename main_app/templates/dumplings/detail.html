@@ -22,7 +22,11 @@
     <h1>{{ dumpling.name }}</h1>
       <h2>A {{ dumpling.cook_type }} dumpling filled with {{ dumpling.filling }}.</h2>
     {% comment %} {% endif %} {% endcomment %}
-    <p>Origin: {{ dumpling.country }}</p>
+    <p>Origin country: {{ dumpling.country }}</p>
+    <div class="dumpling-actions">
+      <a href="{% url 'dumplings_update' dumpling.id %}" class="btn warn">Edit</a>
+      <a href="{% url 'dumplings_delete' dumpling.id %}" class="btn danger">Delete</a>
+    </div>
   </div>
 </section>
 

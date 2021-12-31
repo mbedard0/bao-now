@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Dumpling 
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # Create your views here.
 
 def home(request):
@@ -20,4 +20,12 @@ def detail(request, dumpling_id):
 class DumplingCreate(CreateView):
   model = Dumpling
   fields = '__all__'
+  success_url = '/dumplings/'
+
+class DumplingUpdate(UpdateView):
+  model = Dumpling
+  fields = ['filling', 'cook_type', 'country']
+
+class DumplingDelete(DeleteView):
+  model = Dumpling
   success_url = '/dumplings/'
