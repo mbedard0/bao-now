@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from .models import Dumpling 
+from django.shortcuts import render, redirect
+from .models import Dumpling, Folding 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from .forms import FoldingForm
 # Create your views here.
 
 def home(request):
@@ -15,7 +16,8 @@ def index(request):
 
 def detail(request, dumpling_id):
   dumpling = Dumpling.objects.get(id=dumpling_id)
-  return render(request, 'dumplings/detail.html', {'dumpling': dumpling})
+  folding_form = FoldingForm()
+  return render(request, 'dumplings/detail.html', {'dumpling': dumpling, 'folding_form': FoldingForm()})
 
 class DumplingCreate(CreateView):
   model = Dumpling
@@ -29,3 +31,11 @@ class DumplingUpdate(UpdateView):
 class DumplingDelete(DeleteView):
   model = Dumpling
   success_url = '/dumplings/'
+
+def add_fold(request, dumpling_id):
+  form = FoldingForm(request.POST)
+  if form.is_valid():
+    new_folding = form.save(commit=False)
+    new_folding.dumpling_id = dumpling_id
+    new_folding.save()
+  return redirect('dumplings_detail', dumpling_id=dumpling_id)

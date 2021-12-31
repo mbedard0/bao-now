@@ -3,10 +3,22 @@
 
 {% block head %}
 <link 
+  href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" 
+  rel="stylesheet" 
+/>
+<script 
+  src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"
+>
+</script>
+
+<link 
   rel="stylesheet" 
   type="text/css" 
   href="{% static 'css/dumpling-detail.css' %}"
 />
+
+<script defer src="{% static 'js/dumpling-detail.js' %}"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -29,5 +41,56 @@
     </div>
   </div>
 </section>
+    </div>
+  </div>
+</section>
+<div class="folds-sauce-container">
+  <section class="folds">
+    <div class="subsection-title">
+      <h3>Folds</h3>
+      {% comment %} <img 
+        src="{% static 'images/cat-cone.svg' %}" 
+        alt="An ice cream cone cat"
+      />
+      <img 
+        src="{% static 'images/cat-onigiri.svg' %}"
+        alt="A cat as onigiri"
+      />
+      <img 
+        src="{% static 'images/kitty-kabob.svg' %}" 
+        alt="A kabob of kittens"
+      /> {% endcomment %}
+    </div>
+    <p>Have you folded your dumplings today?</p>
+    <h3>Add a Fold</h3>
+    <form
+      action="{% url 'add_fold' dumpling.id %}" 
+      method="post" 
+      class="subsection-content"
+    >
+      {% csrf_token %}
+      {{ folding_form.as_p }}
+      <button type="submit" class="btn submit">Add Folds</button>
+    </form>
+    <h3>Past Folds</h3>
+    {% if dumpling.folding_set.all.count %}
+    <table>      
+      <thead>
+        <tr><th>Date</th><th>Fold</th></tr>
+      </thead>
+      <tbody>
+        {% for foldings in dumpling.folding_set.all %}
+          <tr>
+            <td>{{foldings.date}}</td>
+            <td>{{foldings.get_fold_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p class="subsection-content">{{dumpling.name}} has never been folded 😟</p>
+    {% endif %}
+  </section>
+</div>
 
 {% endblock %}
