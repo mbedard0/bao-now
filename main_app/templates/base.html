@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,24 +9,26 @@
   <link
     rel="shortcut icon"
     type="image/png"
-    href=""
+    href="{% static 'images/gyoza.svg' %}"
   >
   <title>BaoNow</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
   {% block head %}
   {% endblock %}
 </head>
 <body>
   <header>
     <div class="header-logo-container">
-      <a href="/">
+      {% comment %} <a href="/">
         <img 
-          src="" 
+          src="{% static 'images/gyoza.svg' %}"
           alt="BaoNow logo"
         >
-      </a>
+      </a> {% endcomment %}
     </div>
     <nav>
       <ul>
+        <li><a href="/dumplings">All Dumplings</a></li>
         <li><a href="/about">About</a></li>
       </ul>
     </nav>
