@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from datetime import date
 
 # Create your models here.
 
@@ -20,6 +21,9 @@ class Dumpling(models.Model):
 
   def get_absolute_url(self):
     return reverse('dumplings_detail', kwargs={'dumpling_id': self.id})
+  
+  def folded_for_today(self):
+    return self.folding_set.filter(date=date.today()).count() >= len(FOLDS)
 
 class Folding(models.Model):
   date = models.DateField('Folding date')

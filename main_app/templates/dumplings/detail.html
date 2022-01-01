@@ -68,9 +68,16 @@
       method="post" 
       class="subsection-content"
     >
+      {% comment %} New markup below {% endcomment %}
+      {% if dumpling.folded_for_today %}
+        <p class="folded">{{dumpling.name}} has been folded today!</p>
+      {% else %}
+        <p class="unfolded">{{dumpling.name}} haven't been folded enough today!</p>
+      {% endif %}
+      {% comment %} New markup above {% endcomment %}
       {% csrf_token %}
       {{ folding_form.as_p }}
-      <button type="submit" class="btn submit">Add Folds</button>
+      <button type="submit" class="btn submit">Add Fold</button>
     </form>
     <h3>Past Folds</h3>
     {% if dumpling.folding_set.all.count %}
