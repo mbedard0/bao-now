@@ -40,3 +40,13 @@ class Folding(models.Model):
 
   class Meta:
     ordering = ['-date']
+
+class Sauce(models.Model):
+  name = models.CharField(max_length=150)
+  ingredients = models.CharField(max_length=400)
+
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('sauces_detail', kwargs={'pk': self.id})
