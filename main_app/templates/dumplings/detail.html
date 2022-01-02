@@ -68,13 +68,11 @@
       method="post" 
       class="subsection-content"
     >
-      {% comment %} New markup below {% endcomment %}
       {% if dumpling.folded_for_today %}
         <p class="folded">{{dumpling.name}} has been folded today!</p>
       {% else %}
         <p class="unfolded">{{dumpling.name}} haven't been folded enough today!</p>
       {% endif %}
-      {% comment %} New markup above {% endcomment %}
       {% csrf_token %}
       {{ folding_form.as_p }}
       <button type="submit" class="btn submit">Add Fold</button>
@@ -98,6 +96,49 @@
       <p class="subsection-content">{{dumpling.name}} has never been folded 😟</p>
     {% endif %}
   </section>
+  <section class="sauces">
+    <div class="subsection-title">
+      <h2>Sauces</h2>
+      {% comment %} <img src="{% static 'images/string.svg' %}" alt="A ball of string" />
+      <img src="{% static 'images/mouse.svg' %}" alt="A mouse" />
+      <img src="{% static 'images/fish.svg' %}" alt="A fishy toy" /> {% endcomment %}
+    </div>
+    <h3>{{ dumpling.name }}'s sauces</h3>
+    <div class="subsection-content">
+      {% if dumpling.sauces.count %}
+        {% for sauce in dumpling.sauces.all %}
+          <div class="sauce-container">
+            <div 
+              class="color-block"
+            ></div>
+            <a href="{% url 'sauces_detail' sauce.id %}">
+              <p>{{ sauce.name }} sauce</p>
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="no-sauces">{{dumpling.name}} doesn't have any sauces 😞</p>
+      {% endif %}
+    </div>
+    <h3>Available Sauces</h3>
+    <div class="subsection-content">
+      {% if sauces.count %}
+        {% for sauce in sauces.all %}
+          <div class="sauce-container">
+            <a href="{% url 'sauces_detail' sauce.id %}">
+              <p>{{ sauce.name }} sauce made with {{ sauce.ingredients }}.</p>
+            </a>
+            <form action="{% url 'assoc_sauce' dumpling.id sauce.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn submit">Add this sauce</button>
+            </div>
+        {% endfor %}
+      {% else %}
+        <p class="all-sauces">
+          {{dumpling.name}} already has all the available sauces 🥳
+        </p>
+      {% endif %}
+    </div>
+  </section>
 </div>
-
 {% endblock %}

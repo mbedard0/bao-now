@@ -15,7 +15,7 @@
   <div class="card-bg" style="background-color: {{ sauce.color }}"></div>
   <div class="card-content">
     <h2>{{ sauce.name }}</h2>
-    <p>A {{ sauce.color }} sauce</p>
+    <p>Ingredients: {{ sauce.ingredients }}</p>
   </div>
 </div>
 <a href="{% url 'sauces_update' sauce.id %}" class="btn warn">Edit</a>

@@ -19,8 +19,9 @@ def index(request):
 
 def detail(request, dumpling_id):
   dumpling = Dumpling.objects.get(id=dumpling_id)
+  sauces_dumpling_doesnt_have = Sauce.objects.exclude(id__in = dumpling.sauces.all().values_list('id'))
   folding_form = FoldingForm()
-  return render(request, 'dumplings/detail.html', {'dumpling': dumpling, 'folding_form': FoldingForm()})
+  return render(request, 'dumplings/detail.html', {'dumpling': dumpling, 'folding_form': FoldingForm(), 'sauces': sauces_dumpling_doesnt_have})
 
 def add_fold(request, dumpling_id):
   form = FoldingForm(request.POST)
@@ -28,6 +29,10 @@ def add_fold(request, dumpling_id):
     new_folding = form.save(commit=False)
     new_folding.dumpling_id = dumpling_id
     new_folding.save()
+  return redirect('dumplings_detail', dumpling_id=dumpling_id)
+
+def assoc_sauce(request, dumpling_id, sauce_id):
+  Dumpling.objects.get(id=dumpling_id).sauces.add(sauce_id)
   return redirect('dumplings_detail', dumpling_id=dumpling_id)
 
 class DumplingCreate(CreateView):
@@ -52,3 +57,12 @@ class SauceList(ListView):
 
 class SauceDetail(DetailView):
   model = Sauce
+
+class SauceUpdate(UpdateView):
+  model = Sauce
+  fields = ['ingredients']
+
+class SauceDelete(DeleteView):
+  model = Sauce
+  success_url = '/sauces/'
+

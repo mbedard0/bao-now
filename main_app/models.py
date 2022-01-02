@@ -10,11 +10,22 @@ FOLDS = (
   ('E', 'Evening')
 )
 
+class Sauce(models.Model):
+  name = models.CharField(max_length=150)
+  ingredients = models.CharField(max_length=400)
+
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('sauces_detail', kwargs={'pk': self.id})
+
 class Dumpling(models.Model):
   name = models.CharField(max_length=100)
   filling = models.CharField(max_length=300)
   cook_type = models.CharField(max_length=100)
   country = models.CharField(max_length=100)
+  sauces = models.ManyToManyField(Sauce)
 
   def __str__(self):
     return self.name
@@ -41,12 +52,3 @@ class Folding(models.Model):
   class Meta:
     ordering = ['-date']
 
-class Sauce(models.Model):
-  name = models.CharField(max_length=150)
-  ingredients = models.CharField(max_length=400)
-
-  def __str__(self):
-    return self.name
-
-  def get_absolute_url(self):
-    return reverse('sauces_detail', kwargs={'pk': self.id})
